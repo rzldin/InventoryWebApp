@@ -6,7 +6,7 @@
         <div class="wrap-login100">
             <div class="login100-form-title" style="background-image: url(lgn/images/bg-01.jpg);">
                 <span class="login100-form-title-1">
-                    Sign In
+                    Inventory Web App
                 </span>
             </div>
 
@@ -15,7 +15,7 @@
 
                 <div class="wrap-input100 validate-input m-b-26" data-validate="Name is required">
                     <span class="label-input100">Name</span>
-                    <input class="input100 @error('name') is-invalid @enderror" type="text" name="name" placeholder="Enter name">
+                    <input class="input100 @error('name') is-invalid @enderror" type="text" name="name" placeholder="Masukkan nama">
                     <span class="focus-input100"></span>
                     @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -26,7 +26,7 @@
 
                 <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
                     <span class="label-input100">Password</span>
-                    <input class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter password">
+                    <input class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="Masukkan password">
                     <span class="focus-input100"></span>
                     @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -44,9 +44,9 @@
                     </div>
 
                     <div>
-                        <a href="#" class="txt1">
+                        {{-- <a href="#" class="txt1">
                             Forgot Password?
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
 

@@ -38,6 +38,8 @@
     <script src="{{ asset('admin/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
     <!-- ChartJS -->
     <script src="{{ asset('admin/plugins/chart.js/Chart.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 
     <!-- PAGE SCRIPTS -->
     <script src="{{ asset('admin/dist/js/pages/dashboard2.js') }}"></script>
@@ -50,22 +52,16 @@
         "responsive": true,
         "autoWidth": false,
       });
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
-    });
 
-    $(function(){
-        window.setTimeout(function() { $(".alert-success").hide(300); }, 3500);
-    });
-    $(function(){ 
-        window.setTimeout(function() { $(".alert-danger").hide(300); }, 3500);
+      $('.select2bs4').select2({
+          theme: 'bootstrap4'
+      });
+
+      window.setTimeout(function() {
+        $(".alert-success").hide();
+        $(".alert-danger").hide();
+      }, 4000);
+      
     });
   </script>
 </body>
