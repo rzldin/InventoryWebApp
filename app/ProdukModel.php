@@ -19,6 +19,6 @@ class ProdukModel extends Model
 
     public static function get_produk()
     {
-        return DB::select("SELECT p.*, s.jumlah_barang FROM tbl_produk p JOIN tbl_stok s ON p.id_produk = s.id_produk ");
+        return DB::select("SELECT p.*, s.jumlah_barang, k.nama_kategori FROM tbl_produk p JOIN tbl_stok s ON p.id_produk = s.id_produk JOIN tbl_kategori k ON p.id_kategori = k.id_kategori");
     }
 }

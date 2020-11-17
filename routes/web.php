@@ -47,6 +47,7 @@ Route::post('/produk/stok_get', 'Produk\StokController@stok_get')->name('produk.
 // Laporan
 Route::get('/produk/laporan_cetak_pdf', 'Produk\LaporanController@cetak_pdf')->name('produk.laporan_pdf');
 Route::get('/produk/laporan_cetak_excel', 'Produk\LaporanController@export_excel')->name('produk.laporan_excel');
+Route::get('produk/produk_excel', 'Produk\LaporanController@laporan_excel')->name('produk.cetak_excel');
 
 // User
 Route::get('/master/user', 'Master\UserController@index')->name('master.user');

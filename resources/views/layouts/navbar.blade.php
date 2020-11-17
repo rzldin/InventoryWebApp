@@ -81,12 +81,6 @@
                           <p>Stok</p>
                       </a>
                   </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link {{ Request::segment(2) == 'laporan' ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Laporan</p>
-                        </a>
-                    </li>
                 </ul>
               </li>
               <li class="nav-item has-treeview {{ Request::segment(1) == 'master' ? 'menu-open' : '' }}">
