@@ -139,7 +139,11 @@
                     <div class="card-header">
                         <h3 class="card-title">List Data Produk</h3>
                         <div class="float-sm-right">
-                            <button class="btn btn-block btn-primary" id="tambah"><i class="fa fa-plus"></i> Tambah</button>
+                            <button class="btn btn-block btn-primary" id="tambah"><i class="fa fa-plus"></i> Tambah</button> 
+                            <div class="btn-group mt-3">
+                                <a href="" class="btn btn-danger btn-sm m-2" alt="Export PDF"><i class="fas fa-print"></i></a>
+                                <a href="" class="btn btn-success btn-sm m-2" alt="Export Excel"><i class="fas fa-print"></i></a>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-header -->

@@ -37,14 +37,15 @@ Route::post('/produk/kategori_doEdit', 'Produk\KategoriController@kategori_doEdi
 Route::get('/produk/kategori_delete/{id}', 'Produk\KategoriController@kategori_delete')->name('produk.kategori_delete');
 Route::post('/produk/kategori_get', 'Produk\KategoriController@kategori_get')->name('produk.kategori_get');
 
-
 // Stok
 Route::get('/produk/stok', 'Produk\StokController@index')->name('produk.stok');
-Route::post('/produk/stok_doAdd', 'Produk\StokController@kategori_doAdd')->name('produk.kategori_doAdd');
-Route::post('/produk/cek_kategori', 'Produk\KategoriController@cek_kategori')->name('produk.cek_kategori');
-Route::post('/produk/kategori_doEdit', 'Produk\KategoriController@kategori_doEdit')->name('produk.kategori_doEdit');
-Route::get('/produk/kategori_delete/{id}', 'Produk\KategoriController@kategori_delete')->name('produk.kategori_delete');
-Route::post('/produk/kategori_get', 'Produk\KategoriController@kategori_get')->name('produk.kategori_get');
+Route::post('/produk/stok_doAdd', 'Produk\StokController@stok_doAdd')->name('produk.stok_doAdd');
+Route::post('/produk/stok_doEdit', 'Produk\StokController@stok_doEdit')->name('produk.stok_doEdit');
+Route::get('/produk/stok_delete/{id}', 'Produk\StokController@stok_delete')->name('produk.stok_delete');
+Route::post('/produk/stok_get', 'Produk\StokController@stok_get')->name('produk.stok_get');
+
+// Laporan
+Route::get('/produk/laporan', 'Produk\LaporanController@index')->name('produk.laporan');
 
 // User
 Route::get('/master/user', 'Master\UserController@index')->name('master.user');
