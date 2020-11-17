@@ -59,7 +59,7 @@
 
       window.setTimeout(function() {
         $(".alert-success").hide();
-        $(".alert-danger").hide();
+        // $(".alert-danger").hide();
       }, 4000);
       
     });

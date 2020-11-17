@@ -2,6 +2,13 @@
 
 
 @section('content')
+<style>
+    .thumb{
+        margin: 10px 5px 0 0;
+        width: 100px;
+        padding-left: 2px;
+    } 
+</style>
 
 <div class="content-header">
     <div class="container-fluid">
@@ -29,25 +36,67 @@
         </div>
         <div class="modal-body">
           <!-- form start -->
-            <form class="eventInsForm" method="post" target="_self" name="formku" id="formku">
+            <form class="eventInsForm" method="post" target="_self" name="formku" id="formku" enctype="multipart/form-data">
             {{ csrf_field() }}
                 <div class="form-group">
-                    <label>Kategori</label>
+                    <label>Kategori <font color="#f00">*</font></label>
                     <select name="id_kategori" id="id_kategori" class="form-control select2bs4">
                         <option>Silahkan Pilih ...</option>
                         @foreach ($kategori as $k)
                             <option value="{{ $k->id_kategori }}">{{ ucfirst($k->nama_kategori) }}</option>
                         @endforeach
                     </select>
-                    <input type="hidden" id="id" name="id">
+                    <input type="hidden" id="id" name="id_produk">
+                    <input type="hidden" id="photo_lama" name="photo_lama" multiple>
                 </div>
                 <div class="form-group">
-                    <label>Nama Produk</label>
+                    <label for="date" class="col-form-label">Date <font color="#f00">*</font></label>
+                    <input type="date" name="date" class="form-control" value="<?= date('Y-m-d') ?>">
+                </div>
+                <div class="form-group">
+                    <label>Nama Produk <font color="#f00">*</font></label>
                     <input type="text" class="form-control" name="nama_produk" id="nama_produk" placeholder="Nama Produk ...">
                 </div>
                 <div class="form-group">
-                    <label>Kode Produk</label>
+                    <label>Kode Produk <font color="#f00">*</font></label>
                     <input type="text" class="form-control" name="kode_produk" id="kode_produk" placeholder="Kode Produk ...">
+                </div>
+                <div class="form-group" id="input_photo" style="display:none;">
+                    <label>Foto Produk <font color="#f00">*</font></label>
+                    <div class="fileinput fileinput-new myline" data-provides="fileinput" style="margin-bottom:5px">
+                        <div class="input-group input-small">
+                            <div class="form-control uneditable-input" data-trigger="fileinput">
+                                <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                                <span class="fileinput-filename"></span>
+                            </div>
+                            <span class="input-group-addon btn btn-default btn-file">
+                                <span class="fileinput-new">
+                                    Select file </span>
+                                <span class="fileinput-exists">
+                                    Change </span>
+                                <input type="file" name="gambar[]" id="gambar" multiple>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" id="thumb-output"></div> 
+                </div>
+                <div class="form-group" id="edit_photo" style="display:none;">
+                    <label for="photo-url">Photo Product <font color="#f00">*</font></label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="photo_url[]" id="photo_url" aria-describedby="button-addon2" multiple>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="new_file()" id="button-addon2"><i class="fa fa-edit"></i> Change</button>
+                            </div>
+                        </div>
+                        <div class="row" id="output"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-8">
+                        <small><i>Upload minimal 3 Foto Produk</i></small>
+                    </div>
                 </div>
             </form>
         </div>
@@ -100,25 +149,35 @@
                             <tr>
                                 <th>No</th>
                                 <th>Produk</th>
-                                <th>Kategori</th>
                                 <th>Kode Produk</th>
                                 <th>Foto Produk</th>
+                                <th>Stok Produk</th>
                                 <th>Tanggal Register</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($list_user as $item)
+                            @foreach ($produk as $p)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ ucfirst($item->name) }}</td>
-                                <td>{{ $item->email }}</td>
+                                <td>{{ ucfirst($p->nama_produk) }}</td>
+                                <td>{{ $p->kode_produk }}</td>
+                                @php
+                                    $images = explode("|", $p->foto_produk);
+                                @endphp
+                                <td align="center">
+                                    @foreach ($images as $item)
+                                        <img src="{{ asset('upload/produk/' . $item)}}" style="width: 50px; height:50px;"> 
+                                    @endforeach 
+                                </td>
+                                <td>{{ $p->jumlah_barang }}</td>
+                                <td>{{ $p->tgl_register }}</td>
                                 <td>
-                                    <button class="btn btn-info btn-sm" onclick="editData({{ $item->id }})"><i class="fa fa-edit"></i> Edit</button>
-                                    <a class="btn btn-danger btn-sm tombol-hapus" href="{{ '/master/users_delete/'.$item->id }}"><i class="fa fa-trash"></i> Delete</a>
+                                    <button class="btn btn-info btn-sm" onclick="editData({{ $p->id_produk }})"><i class="fa fa-edit"></i> Edit</button>
+                                    <a class="btn btn-danger btn-sm tombol-hapus" href="{{ '/produk/produk_delete/'.$p->id_produk }}"><i class="fa fa-trash"></i> Delete</a>
                                 </td>
                             </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                     </div>
@@ -136,50 +195,58 @@
         $('#nama_produk').val('');
         $('#kode_produk').val('');
         $('#id_kategori').val('');
+        $('#date').val('');
+        $('#input_photo').show();
+        $('#edit_photo').hide();
         dsState = "Input";
         
         $("#myModal").find('.modal-title').text('Tambah Produk');
         $("#myModal").modal('show',{backdrop: 'true'}); 
     });
 
+
     $("#saveData").click(function(){
-        if($.trim($("#name").val()) == ""){
+        if($.trim($("#nama_produk").val()) == ""){
             Toast.fire({
                 icon: 'error',
-                title: ' Nama harus diisi'
+                title: ' Nama Produk harus diisi'
             });
-        } else if($.trim($("#email").val()) == ""){
+        } else if($.trim($("#kode_produk").val()) == ""){
             Toast.fire({
                 icon: 'error',
-                title: ' Email harus diisi'
+                title: ' Kode Produk harus diisi'
             });
         }else{
             if(dsState=="Input"){
+
+                $('#select_image').change(function(){
+                    $('#formku').submit();
+                });
+
                 $.ajax({
                 type:"POST",
-                url:"{{ route('master.cek_nama_user') }}",
+                url:"{{ route('produk.cek_produk') }}",
                 data:{
                         "_token" : "{{ csrf_token() }}",
-                        "nama" : $("#name").val()
-
+                        "kode_produk" : $("#kode_produk").val(),
                      },
                 success:function(result){
                     if(result=="duplicate"){
                         Toast.fire({
                             icon: 'error',
-                            title: ' Nama User sudah ada'
+                            title: ' Kode Produk sudah ada'
                         });
                     }else{
                     // console.log(result);
                         $('#message').html("");
                         $('.alert-danger').hide();
-                        $('#formku').attr("action", "{{ route('master.user_doAdd') }}");
+                        $('#formku').attr("action", "{{ route('produk.produk_doAdd') }}");
                         $('#formku').submit();                    
                     }
                 }
             });
             }else{
-                $('#formku').attr("action", " {{ route('master.user_doEdit') }}");
+                $('#formku').attr("action", " {{ route('produk.produk_doEdit') }}");
                 $('#formku').submit(); 
             }
         }
@@ -188,22 +255,33 @@
         dsState = "Edit";
         $.ajax({
             type: "POST",
-            url: "{{ route('master.user_get') }}",
+            url: "{{ route('produk.produk_get') }}",
             dataType: 'json',
             data : {
                 "_token" : "{{ csrf_token() }}",
                 id : id
             },
             success: function (result){
-                // console.log(result);
-                $('#id').val(result.id);
-                $('#name').val(result.name);
-                $('#email').val(result.email);
+                console.log(result);
+                $('#id').val(result.id_produk);
+                $('#nama_produk').val(result.nama_produk);
+                $('#kode_produk').val(result.kode_produk);
+                $('#date').val(result.tgl_register);
+                $('#photo_url').val(result.foto_produk);
+                $('#photo_lama').val(result.foto_produk)
+                $('#id_kategori').val(result.id_kategori).trigger("change");
+                $('#input_photo').hide();
+                $('#edit_photo').show();
 
-                $("#myModal").find('.modal-title').text('Edit User');
+                $("#myModal").find('.modal-title').text('Edit Produk');
                 $("#myModal").modal('show',{backdrop: 'true'});           
             }
         });
+    }
+
+    function new_file(){
+        $('#input_photo').show();
+        $('#edit_photo').hide();
     }
 
 
@@ -218,6 +296,55 @@
             $('#passwordWarning').hide();
         }
     }
+
+    //View Image
+        $(function(){
+            $('#gambar').on('change', function(){ //on file input change
+                if (window.File && window.FileReader && window.FileList && window.Blob) //check File API supported browser
+                {
+                    
+                    var data = $(this)[0].files; //this file data
+                    
+                    $.each(data, function(index, file){ //loop though each file
+                        if(/(\.|\/)(gif|jpe?g|png)$/i.test(file.type)){ //check supported file type
+                            var fRead = new FileReader(); //new filereader
+                            fRead.onload = (function(file){ //trigger function on successful read
+                            return function(e) {
+                                var img = $('<img/>').addClass('thumb').attr('src', e.target.result); //create image element 
+                                $('#thumb-output').append(img); //append image to output element
+                            };
+                            })(file);
+                            fRead.readAsDataURL(file); //URL representing the file's data.
+                        }
+                    });
+                    
+                }else{
+                    alert("Your browser doesn't support File API!"); //if File API is absent
+                }
+            });
+        });
+        
+
+        //Limit Image
+        $(function(){
+            var min_file_number = 3,
+            $form = $('#formku'),
+            $file_upload = $('#gambar', $form),
+            $button = $('#saveData', $form);
+
+            $button.prop('disabled', 'disabled');
+
+            $file_upload.on('change', function () {
+                var number_of_images = $(this)[0].files.length;
+                if (number_of_images < min_file_number) {
+                alert(`Upload minimal ${min_file_number} foto produk.`);
+                $(this).val('');
+                $button.prop('disabled', 'disabled');
+                } else {
+                $button.prop('disabled', false);
+                }
+            });
+        })
 
 
 

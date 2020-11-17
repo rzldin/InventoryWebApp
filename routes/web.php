@@ -23,10 +23,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Produk
 Route::get('/produk/produk', 'Produk\ProdukController@index')->name('produk.index');
-Route::post('/produk/user_doAdd', 'Produk\ProdukController@produk_doAdd')->name('produk.produk_doAdd');
-Route::post('/produk/cek_produk', 'Produk\ProdukController@cek_produk')->name('produk.cek_nama_produk');
+Route::post('/produk/produk_doAdd', 'Produk\ProdukController@produk_doAdd')->name('produk.produk_doAdd');
+Route::post('/produk/cek_produk', 'Produk\ProdukController@cek_produk')->name('produk.cek_produk');
 Route::post('/produk/produk_doEdit', 'Produk\ProdukController@produk_doEdit')->name('produk.produk_doEdit');
-Route::get('/produk/produk_delete/{id}', 'Produk\ProdukController@produks_delete')->name('produk.produk_delete');
+Route::get('/produk/produk_delete/{id}', 'Produk\ProdukController@produk_delete')->name('produk.produk_delete');
 Route::post('/produk/produk_get', 'Produk\ProdukController@produk_get')->name('produk.produk_get');
 
 // Kategori
@@ -37,6 +37,14 @@ Route::post('/produk/kategori_doEdit', 'Produk\KategoriController@kategori_doEdi
 Route::get('/produk/kategori_delete/{id}', 'Produk\KategoriController@kategori_delete')->name('produk.kategori_delete');
 Route::post('/produk/kategori_get', 'Produk\KategoriController@kategori_get')->name('produk.kategori_get');
 
+
+// Stok
+Route::get('/produk/stok', 'Produk\StokController@index')->name('produk.stok');
+Route::post('/produk/stok_doAdd', 'Produk\StokController@kategori_doAdd')->name('produk.kategori_doAdd');
+Route::post('/produk/cek_kategori', 'Produk\KategoriController@cek_kategori')->name('produk.cek_kategori');
+Route::post('/produk/kategori_doEdit', 'Produk\KategoriController@kategori_doEdit')->name('produk.kategori_doEdit');
+Route::get('/produk/kategori_delete/{id}', 'Produk\KategoriController@kategori_delete')->name('produk.kategori_delete');
+Route::post('/produk/kategori_get', 'Produk\KategoriController@kategori_get')->name('produk.kategori_get');
 
 // User
 Route::get('/master/user', 'Master\UserController@index')->name('master.user');

@@ -54,8 +54,8 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <!-- Add icons to the links using the .nav-icon class
                    with font-awesome or any other icon font library -->
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
+              <li class="nav-item has-treeview {{ Request::segment(1) == 'produk' ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ Request::segment(1) == 'produk' ? 'active' : '' }}">
                     <i class="nav-icon fas fa-shopping-cart"></i>
                     <p>
                         Produk
@@ -64,27 +64,33 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ route('produk.index') }}" class="nav-link">
+                        <a href="{{ route('produk.index') }}" class="nav-link {{ Request::segment(2) == 'produk' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Data Produk</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('produk.kategori') }}" class="nav-link">
+                        <a href="{{ route('produk.kategori') }}" class="nav-link {{ Request::segment(2) == 'kategori' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Data Kategori</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                      <a href="{{ route('produk.stok') }}" class="nav-link {{ Request::segment(2) == 'stok' ? 'active' : '' }}">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Stok</p>
+                      </a>
+                  </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link {{ Request::segment(2) == 'laporan' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Laporan</p>
                         </a>
                     </li>
                 </ul>
               </li>
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
+              <li class="nav-item has-treeview {{ Request::segment(1) == 'master' ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ Request::segment(1) == 'master' ? 'active' : '' }}">
                     <i class="nav-icon fas fa-book"></i>
                     <p>
                         Master
@@ -93,7 +99,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ route('master.user') }}" class="nav-link">
+                        <a href="{{ route('master.user') }}" class="nav-link {{ Request::segment(2) == 'user' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Data User</p>
                         </a>
